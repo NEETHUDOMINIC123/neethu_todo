@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<link rel="stylesheet" href="css/style.css">
+<body>
+    <div class="topnav">
+        <a class="active" href="#home"><b><left>TO DO LIST</left></b></a>
+        <a href=""><b>LOG OUT</b></a>
+       
+      </div>
+
+    <div id="myDIV" class="header">
+        <h2>My To Do List</h2>
+        <input type="text" id="myInput" placeholder="Title...">
+        <span onclick="newElement()" class="addBtn">Add</span>
+      </div>
+      
+     
+
+
+<button onclick="return loadAjax();">display todos</button>
+
+
+<p id="demo"></p>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Number</th>
+            <!-- <th>userId</th> -->
+            <th>Title</th>
+            <th>checkbox</th>
+        </tr>
+    </thead>
+    <tbody id="tableBody">
+
+    </tbody>
+</table>
+       <!-- script starts -->
+<script>
+   var loadAjax = function() {
+   var xhr = new XMLHttpRequest();
+   xhr.open("GET","https://jsonplaceholder.typicode.com/todos",true);
+    xhr.send();
+
+    xhr.onreadystatechange = function(){
+
+        if(this.readyState == 4 && this.status == 200){
+            
+            var htmlData = JSON.parse(xhr.responseText);
+            var htmlContent =""
+           for(var i =0; i<htmlData.length; i++){
+               var currentRecord = htmlData[i];
+                htmlContent += "<tr><td>"+currentRecord.id+"</td><td>"+currentRecord.title+"</td><td><input type='checkbox' name='test' value="+currentRecord.completed+"></td></tr>"
+            }
+            document.getElementById("tableBody").innerHTML = htmlContent;
+        }
+    }
+
+}
+</script>
+
+<script src="main.js"></script>
+</body>
+</html>
+
